@@ -1,37 +1,82 @@
 
-import org.postgis.Geometry;
-
-
-
-
-
-
-
-
+import java.awt.Color;
+import java.awt.Graphics;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import utilities.Arrow;
 /**
  *
  * @author insan3
  */
 public class Main extends javax.swing.JFrame {
-
+    Datasource ds=new Datasource();
+    ArrayList<Trajectory> t=ds.getTrajectoryFromDB();
     /**
      * Creates new form Main
      */
     public Main() {
-        Datasource ds=new Datasource();
-        Trajectory t=ds.getTrajectoryFromDB();
         
+        
+        /*
         Geometry g=t.getPoints().getGeometry();
         
+        LineString multi=null;
+        
+        try {
+            multi=new LineString(g.toString());
+        } catch (SQLException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(multi.getPoint(0));
+        System.out.println(multi.getPoint(3));
+        System.out.println(multi.getPoint(40));
+        System.out.println("");
+        
         for (int i = 0; i < g.numPoints(); i++) {
-            System.out.println(g.getPoint(i));
+            //System.out.println(g.getPoint(i));
             
             
         }
-        
+        */
+     
         initComponents();
         
     }
+    
+    @Override
+    public final void paint(Graphics g){
+        super.paint(g);
+        try {
+            
+            
+            ArrayList<long[]> points= Trajectory.getCoord2d(t,jPanel.getWidth()-20, jPanel.getHeight()-20);
+            int x=0;
+            int i = 0;
+            for (; i < points.size()-1; i++) {
+                if(points.get(i)[0]==points.get(i+1)[0]){
+                    jPanel.getGraphics().drawLine((int)points.get(i)[1],(int)points.get(i)[2],(int)points.get(i+1)[1], (int)points.get(i+1)[2]);
+                }else{
+                    
+                    
+                    
+                    jPanel.getGraphics().fillOval((int)points.get(i)[1], (int)points.get(i)[2], 10,10);
+                    x++;
+                }
+                
+                
+                
+            }
+           
+           jPanel.getGraphics().fillOval((int)points.get(i)[1], (int)points.get(i)[2], 10,10); 
+        } catch (SQLException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,17 +87,30 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
+        jPanel.setLayout(jPanelLayout);
+        jPanelLayout.setHorizontalGroup(
+            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jPanelLayout.setVerticalGroup(
+            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -87,6 +145,7 @@ public class Main extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Main().setVisible(true);
             }
@@ -94,5 +153,6 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel;
     // End of variables declaration//GEN-END:variables
 }

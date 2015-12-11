@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 //import org.postgis.PGgeometry;
 
 import java.sql.Statement;
+import java.util.ArrayList;
 import org.postgis.PGgeometry;
 
 /**
@@ -39,7 +40,7 @@ public class Datasource {
 
     }
 
-    public Trajectory getTrajectoryFromDB() {
+    public ArrayList<Trajectory> getTrajectoryFromDB() {
         
         
         
@@ -50,7 +51,7 @@ public class Datasource {
         Statement stmt = null;
         ResultSet rs = null;
         
-        Trajectory out=null;
+        ArrayList<Trajectory> out=new ArrayList<>();
         
         
         
@@ -66,12 +67,11 @@ public class Datasource {
             String query
                     = "SELECT owner, geom, trId "
                     + "FROM trajectories "
-                    + "WHERE trId='20080929093447' ";
+                    + "WHERE trid='20080929093447' OR  trid= '20080927231533'  ";
             rs = stmt.executeQuery(query);
             
-            
-            if(rs.next()){
-                out= makeTrajectory(rs);
+            while(rs.next()){
+                out.add(makeTrajectory(rs));
             }
             con.close();
         } catch (SQLException | ClassNotFoundException ex) {
