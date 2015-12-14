@@ -1,9 +1,6 @@
 
-import java.awt.List;
-import java.awt.geom.Line2D;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import org.postgis.LineString;
 import org.postgis.PGgeometry;
 import org.postgis.Point;
@@ -95,13 +92,14 @@ public class Trajectory {
 
             for (Point p1 : p) {
 
-                long d[] = new long[4];
+                long d[] = new long[5];
                 
                 d[0] = Long.parseLong(t1.getTrId());
                                                 
                 d[1] = (int)((p1.getX() - xMinP) / (diff1 / x));
                 d[2] = (int) (y-(p1.getY() - yMinP) / (diff2 / y));
                 d[3] = (int) p1.getZ();
+                d[4] = (int) p1.getM();
                 out.add(d);
 
                 System.out.println(d[0]+" "+d[1] + "  " + d[2]);

@@ -1,11 +1,12 @@
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import utilities.Arrow;
 /**
  *
  * @author insan3
@@ -40,7 +41,11 @@ public class Main extends javax.swing.JFrame {
             
         }
         */
-     
+   
+        
+       
+        
+        
         initComponents();
         
     }
@@ -48,28 +53,42 @@ public class Main extends javax.swing.JFrame {
     @Override
     public final void paint(Graphics g){
         super.paint(g);
+        Graphics2D g1=(Graphics2D)jPanel.getGraphics();
         try {
             
             
             ArrayList<long[]> points= Trajectory.getCoord2d(t,jPanel.getWidth()-20, jPanel.getHeight()-20);
-            int x=0;
+            
+            boolean primo=true;
             int i = 0;
+            
             for (; i < points.size()-1; i++) {
                 if(points.get(i)[0]==points.get(i+1)[0]){
-                    jPanel.getGraphics().drawLine((int)points.get(i)[1],(int)points.get(i)[2],(int)points.get(i+1)[1], (int)points.get(i+1)[2]);
+                    
+                    if(primo){
+                        g1.setColor(Color.green);
+                        g1.fillOval((int)points.get(i)[1], (int)points.get(i)[2], 10,10);
+                        primo=false;
+                    }
+                    g1.setStroke(new BasicStroke( (float)( (points.get(i)[3]*points.get(i+1)[3]/2)/1000) ));
+                    
+                    g1.setColor(Color.black);
+                    g1.drawLine((int)points.get(i)[1],(int)points.get(i)[2],(int)points.get(i+1)[1], (int)points.get(i+1)[2]);
                 }else{
                     
                     
                     
-                    jPanel.getGraphics().fillOval((int)points.get(i)[1], (int)points.get(i)[2], 10,10);
-                    x++;
+                    primo=true;
+                    g1.setColor(Color.red);
+                    g1.fillOval((int)points.get(i)[1], (int)points.get(i)[2], 10,10);
+      
                 }
                 
                 
                 
             }
-           
-           jPanel.getGraphics().fillOval((int)points.get(i)[1], (int)points.get(i)[2], 10,10); 
+           g1.setColor(Color.red);
+           g1.fillOval((int)points.get(i)[1], (int)points.get(i)[2], 10,10); 
         } catch (SQLException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
