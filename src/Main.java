@@ -18,33 +18,7 @@ public class Main extends javax.swing.JFrame {
      * Creates new form Main
      */
     public Main() {
-        
-        
-        /*
-        Geometry g=t.getPoints().getGeometry();
-        
-        LineString multi=null;
-        
-        try {
-            multi=new LineString(g.toString());
-        } catch (SQLException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println(multi.getPoint(0));
-        System.out.println(multi.getPoint(3));
-        System.out.println(multi.getPoint(40));
-        System.out.println("");
-        
-        for (int i = 0; i < g.numPoints(); i++) {
-            //System.out.println(g.getPoint(i));
-            
-            
-        }
-        */
-   
-        
-       
-        
+
         
         initComponents();
         
