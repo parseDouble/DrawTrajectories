@@ -70,7 +70,7 @@ public class Main extends javax.swing.JFrame {
                         g1.fillOval((int)points.get(i)[1], (int)points.get(i)[2], 10,10);
                         primo=false;
                     }
-                    g1.setStroke(new BasicStroke( (float)( (points.get(i)[3]*points.get(i+1)[3]/2)/1000) ));
+                    g1.setStroke(new BasicStroke( (float)( (points.get(i)[3]*points.get(i+1)[3]/2)/750) ));
                     
                     g1.setColor(Color.black);
                     g1.drawLine((int)points.get(i)[1],(int)points.get(i)[2],(int)points.get(i+1)[1], (int)points.get(i+1)[2]);

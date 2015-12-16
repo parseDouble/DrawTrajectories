@@ -1,6 +1,10 @@
 
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import org.postgis.LineString;
 import org.postgis.PGgeometry;
 import org.postgis.Point;
@@ -99,10 +103,10 @@ public class Trajectory {
                 d[1] = (int)((p1.getX() - xMinP) / (diff1 / x));
                 d[2] = (int) (y-(p1.getY() - yMinP) / (diff2 / y));
                 d[3] = (int) p1.getZ();
-                d[4] = (int) p1.getM();
+                d[4] = (long)(double)p1.getM();
                 out.add(d);
 
-                System.out.println(d[0]+" "+d[1] + "  " + d[2]);
+                System.out.println(d[0]+" "+d[1] + "  " + d[2]+" "+d[3]+" "+new Date(d[4]));
             }
 
         }
