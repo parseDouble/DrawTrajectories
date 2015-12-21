@@ -14,11 +14,17 @@ import java.util.logging.Logger;
 public class Main extends javax.swing.JFrame {
     Datasource ds=new Datasource();
     ArrayList<Trajectory> t=ds.getTrajectoryFromDB();
+    Color[] c= new Color[20];
     /**
      * Creates new form Main
      */
     public Main() {
+        for (int i = 0; i < c.length; i++) {
+            c[i]=new Color((int)(Math.random()*255),(int)(Math.random()*255),(int)(Math.random()*255));
+            
+        }
 
+        
         
         initComponents();
         
@@ -36,18 +42,33 @@ public class Main extends javax.swing.JFrame {
             boolean primo=true;
             int i = 0;
             
+            
+            
             for (; i < points.size()-1; i++) {
                 if(points.get(i)[0]==points.get(i+1)[0]){
                     
                     if(primo){
                         g1.setColor(Color.green);
                         g1.fillOval((int)points.get(i)[1], (int)points.get(i)[2], 10,10);
+                        
+                       
+                        
+                        g1.setColor(c[(int)points.get(i)[5]]);
+                        
+                        
+                        
                         primo=false;
                     }
-                    g1.setStroke(new BasicStroke( (float)( (points.get(i)[3]*points.get(i+1)[3]/2)/750) ));
+                    float mediaAlt=(points.get(i)[3]*points.get(i+1)[3]/2)/750;
+                    float[] fl = {0.5f};
+                    g1.setStroke(new BasicStroke((float)(Math.sqrt(Math.abs(mediaAlt)))));
+                    if(mediaAlt<0){
+                        g1.setStroke(new BasicStroke(-mediaAlt,BasicStroke.CAP_BUTT,BasicStroke.JOIN_BEVEL,0,fl,0.0f));
+                    }
+                    g1.drawLine((int)points.get(i)[1],(int)points.get(i)[2],(int)points.get(i+1)[1], (int)points.get(i+1)[2]);    
+                    //g1.setStroke(new BasicStroke((float)( (points.get(i)[3]*points.get(i+1)[3]/2)/750) ));
+
                     
-                    g1.setColor(Color.black);
-                    g1.drawLine((int)points.get(i)[1],(int)points.get(i)[2],(int)points.get(i+1)[1], (int)points.get(i+1)[2]);
                 }else{
                     
                     

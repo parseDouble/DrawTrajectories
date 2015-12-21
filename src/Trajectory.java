@@ -96,7 +96,7 @@ public class Trajectory {
 
             for (Point p1 : p) {
 
-                long d[] = new long[5];
+                long d[] = new long[6];
                 
                 d[0] = Long.parseLong(t1.getTrId());
                                                 
@@ -104,9 +104,11 @@ public class Trajectory {
                 d[2] = (int) (y-(p1.getY() - yMinP) / (diff2 / y));
                 d[3] = (int) p1.getZ();
                 d[4] = (long)(double)p1.getM();
+                d[5] = (int)Integer.parseInt(t1.getOwner());
+                
                 out.add(d);
 
-                System.out.println(d[0]+" "+d[1] + "  " + d[2]+" "+d[3]+" "+new Date(d[4]));
+                System.out.println(d[0]+" "+d[1] + "  " + d[2]+" "+d[3]+" "+new Date(d[4])+" "+d[5]);
             }
 
         }

@@ -67,7 +67,7 @@ public class Datasource {
             String query
                     = "SELECT owner, geom, trId "
                     + "FROM trajectories "
-                    + "WHERE trid='20080929093447' OR  trid= '20080927231533'  ";
+                    + "WHERE trid='20080929093447' OR  trid= '20080927231533'   OR trid='20081119011305' OR trid='20081101024405'";
             rs = stmt.executeQuery(query);
             
             while(rs.next()){
